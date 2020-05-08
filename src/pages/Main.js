@@ -10,6 +10,7 @@ import api from '../services/api';
 function Main({ navigation }){
     const [devs, setDevs] = useState([]);
     const [currentRegion, setCurrentRegion] = useState(null);
+    const [techs, setTechs] = useState('');
 
     useEffect(()=> {
         async function loadInitialPosition() {
@@ -41,7 +42,7 @@ function Main({ navigation }){
             params: {
                 latitude,
                 longitude,
-                techs: 'Java'
+                techs
             }
         });
         setDevs(response.data.devs);
@@ -78,7 +79,7 @@ function Main({ navigation }){
                  navigation.navigate('Profile', { github_username: dev.github_username })
              }}>
                  <View style={styles.callout}>
-            <Text style={styles.devName}>{ dev.nome }</Text>
+            <Text style={styles.devName}>{ dev.name }</Text>
                      <Text style={styles.devBio}> { dev.bio }</Text>
             <Text style={styles.devTechs}>{ dev.techs.join(', ')}</Text>
                  </View>
@@ -93,6 +94,8 @@ function Main({ navigation }){
                 placeholderTextColor="#999"
                 autoCapitalize="words"
                 autoCorrect={false}
+                value={techs}
+                onChangeText={setTechs}
             />
             <TouchableOpacity onPress={loadDevs} sytle={styles.loadButton}>
                 <MaterialIcons name="my-location" size={40} color="#FFF" />
