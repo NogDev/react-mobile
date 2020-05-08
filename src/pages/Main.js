@@ -1,7 +1,8 @@
 import React, { useState ,useEffect } from 'react';
-import { StyleSheet, Image, View, Text } from 'react-native';
+import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps'
 import { requestPermissionsAsync, getCurrentPositionAsync} from 'expo-location'
+import { MaterialIcons } from '@expo/vector-icons'
 
 
 function Main({ navigation }){
@@ -35,25 +36,39 @@ function Main({ navigation }){
         return null;
     }
     return (
-        <MapView  initialRegion={currentRegion} style= {style.map}>
+      <>  
+        <MapView  initialRegion={currentRegion} style= {styles.map}>
             <Marker coordinate={{latitude: -12.9158725, longitude: -38.4369632}}>
-                <Image style={style.avatar} source={{ uri: 'https://avatars3.githubusercontent.com/u/25827712?s=400&u=4b4df62325f2118daa9a30a9f7c4702db4d10606&v=4'}}/>
+                <Image style={styles.avatar} source={{ uri: 'https://avatars3.githubusercontent.com/u/25827712?s=400&u=4b4df62325f2118daa9a30a9f7c4702db4d10606&v=4'}}/>
 
                 <Callout onPress={() => {
                     navigation.navigate('Profile', { github_username: 'NogDev' })
                 }}>
-                    <View style={style.callout}>
-                        <Text style={style.devName}>NogDev</Text>
-                        <Text style={style.devBio}> Boioo phogougougoou</Text>
-                        <Text style={style.devTechs}>Java e Joomla</Text>
+                    <View style={styles.callout}>
+                        <Text style={styles.devName}>NogDev</Text>
+                        <Text style={styles.devBio}> Boioo phogougougoou</Text>
+                        <Text style={styles.devTechs}>Java e Joomla</Text>
                     </View>
                 </Callout>
             </Marker>
         </MapView>
+        <View style={styles.seachForm}>
+            <TextInput 
+                style={styles.searchInput}
+                placeholder="Buscar devs por techs"
+                placeholderTextColor="#999"
+                autoCapitalize="words"
+                autoCorrect={false}
+            />
+            <TouchableOpacity onPress={() => {}} sytle={styles.loadButton}>
+                <MaterialIcons name="my-location" size={40} color="#FFF" />
+            </TouchableOpacity>
+        </View>
+      </>
     );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     map: {
         flex: 1
     },
@@ -82,7 +97,42 @@ const style = StyleSheet.create({
 
     devTechs: {
         marginTop: 5,
-    }
+    },
+    seachForm: {
+        position: 'absolute',
+        top: 20,
+        left: 20,
+        right: 20,
+        zIndex: 5,
+        flexDirection: 'row'
+    },
+
+    searchInput: {
+        flex: 1,
+        height: 50,
+        backgroundColor: '#FFF',
+        color: '#333',
+        borderRadius: 25,
+        paddingHorizontal: 20,
+        fontSize: 16,
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowOffset: {
+            width: 4,
+            height: 4,
+        },
+        elevation: 2,
+    },
+   
+    loadButton: {
+        width: 50,
+        height: 50,
+        backgroundColor: '#8E4DFF',
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 15,
+    },
 
 })
 
