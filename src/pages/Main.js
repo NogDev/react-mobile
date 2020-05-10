@@ -38,10 +38,13 @@ function Main({ navigation }){
 
     function setupWebsocket(){
 
-        connect();
-        // connect('connection', socket => {
-        //     console.log(socket.id);
-        // });
+        const { latitude, longitude } = currentRegion;
+
+        connect(
+            latitude,
+            longitude,
+            techs,
+        );
     }
 
     async function loadDevs() {
